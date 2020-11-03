@@ -1,0 +1,42 @@
+open laser (insight)
+	980nm
+	open laser
+	opeb shutter
+	turn on pockel
+
+Real imaging session:
+
+open arduino (blue icon)
+	open quad_encoder in C:\Users\NLW1\Documents\Arduino\quad_encoder
+	upload (right arrow)
+
+open matlab
+	scanbox_config
+	make sure this is right
+		sbconfig.quad_com       = 'COM11';
+	check port COM in arduino tools
+
+run scanbox (after arduino and before python stuff)
+	enable encoder
+		make sure it fucking works
+
+open spyder by typing spyder in anaconda prompt (black box icon)
+
+edit mouse, date , imaging session and data set in python files for each recording sess
+edit directory test_000_000 that will create a folder
+
+	random stimuli is for zstacks
+	orientation tuning for grating
+	movie only for what we used to do with longer dark periods
+
+click start (green arrow) in python
+	press space when asked for it while doing hovering bullshit
+ to end, click on py console and click escape
+
+visual_stimuli files saved in C:\Quique\Imaging Sessions
+	drop the file in data folders before transferring
+
+
+sbconfig.eyetracker     = true;  for eye tracker
+	enable eye tracker in scanbox
+	draw square box on mouse
