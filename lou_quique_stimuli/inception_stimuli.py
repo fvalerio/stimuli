@@ -24,8 +24,8 @@ grating_type = 'sqr'
 
 warping = False
 
-# natural_movie_directory = 'C:' + os.sep + 'Quique' + os.sep + 'Natural Movies'
-# imaging_session_directory = 'C:' + os.sep + 'Quique' + os.sep + 'Imaging Sessions' + os.sep + str(date)
+natural_movie_directory = 'C:' + os.sep + 'Vincent' + os.sep + 'Natural Movies'
+imaging_session_directory = 'C:' + os.sep + 'Vincent' + os.sep + 'Imaging Sessions' + os.sep + str(date)
 
 # set the orientations (in degrees) of the gratings
 orientations = numpy.linspace(270.0, 585.0, 8)
@@ -44,15 +44,15 @@ number_of_movies = 5
 
 idle_color = -1
 
-# if not os.path.isdir(imaging_session_directory):
-# 	os.mkdir(imaging_session_directory)
-#
-# imaging_session_directory += os.sep + mouse
-#
-# if not os.path.isdir(imaging_session_directory):
-# 	os.mkdir(imaging_session_directory)
+if not os.path.isdir(imaging_session_directory):
+ 	os.mkdir(imaging_session_directory)
 
-# file_name = imaging_session_directory + os.sep + mouse + '_' + imaging_session + '_' + data_set + ' grating times.txt'
+imaging_session_directory += os.sep + mouse
+
+if not os.path.isdir(imaging_session_directory):
+ 	os.mkdir(imaging_session_directory)
+
+file_name = imaging_session_directory + os.sep + mouse + '_' + imaging_session + '_' + data_set + ' image_times.txt'
 
 # set a pseudo-random sequence to show the gratings, images, and movies
 grating_order = [[o, s, t] for o in orientations for s in spatial_frequencies for t in temporal_frequencies]*grating_repetitions
@@ -63,10 +63,10 @@ movie_order = list(range(number_of_movies))*movie_repetitions
 shuffle(movie_order)
 print('movie order: ' + str(movie_order))
 
-# movies = []
+movies = []
 
-# for i in range(1, number_of_movies + 1):
-#     movies.append(natural_movie_directory + os.sep + str(i) + '.mp4')
+for i in range(1, number_of_movies + 1):
+    movies.append(natural_movie_directory + os.sep + str(i) + '.png')
 
 # # make a window for the stimuli
 main_window = visual.Window(monitor = 'NLW1', fullscr = True, color = [idle_color, idle_color, idle_color], useFBO = True, screen = 1)
@@ -79,12 +79,12 @@ if warping:
 print('Ready...')
 
 # initialize screen to black before imaging
-# while True:
-#     if event.getKeys(keyList = ['escape']):
-#         main_window.close()
-#         core.quit()
-#     if event.getKeys(keyList = ['space']):
-#         break
+while True:
+    if event.getKeys(keyList = ['escape']):
+        main_window.close()
+        core.quit()
+    if event.getKeys(keyList = ['space']):
+        break
 
 print('Initializing...')
 
@@ -107,37 +107,37 @@ while end - start <= 10.0:
 
     main_window.flip()
 
-grating_times = []
+# grating_times = []
 
-print('Presenting gratings...')
+# print('Presenting gratings...')
 
-for orientation, spatial_frequency, temporal_frequency in grating_order:
-    temp = str(datetime.datetime.now().time())
-    temp = temp.split(':')
+# for orientation, spatial_frequency, temporal_frequency in grating_order:
+#     temp = str(datetime.datetime.now().time())
+#     temp = temp.split(':')
 
-    time = 0.0
+#     time = 0.0
 
-    for i in range(len(temp)):
-        time += float(temp[i])*(60.0**i)
+#     for i in range(len(temp)):
+#         time += float(temp[i])*(60.0**i)
 
-    grating_times.append([orientation, spatial_frequency, temporal_frequency, time])
+#     grating_times.append([orientation, spatial_frequency, temporal_frequency, time])
 
-    command = drifting_gratings(grating_type, orientation, spatial_frequency, temporal_frequency, presentation_time = 2.0, blank_time = 3.0, windows = [main_window])
+#     command = drifting_gratings(grating_type, orientation, spatial_frequency, temporal_frequency, presentation_time = 2.0, blank_time = 3.0, windows = [main_window])
 
-    temp = str(datetime.datetime.now().time())
-    temp = temp.split(':')
+#     temp = str(datetime.datetime.now().time())
+#     temp = temp.split(':')
 
-    time = 0.0
+#     time = 0.0
 
-    for i in range(len(temp)):
-        time += float(temp[i])*(60.0**i)
+#     for i in range(len(temp)):
+#         time += float(temp[i])*(60.0**i)
 
-    grating_times.append([orientation, spatial_frequency, temporal_frequency, time])
+#     grating_times.append([orientation, spatial_frequency, temporal_frequency, time])
 
-    if command == 'quit':
-        # numpy.savetxt(file_name, grating_times)
-        main_window.close()
-        core.quit()
+#     if command == 'quit':
+#         # numpy.savetxt(file_name, grating_times)
+#         main_window.close()
+#         core.quit()
 
 # numpy.savetxt(file_name, grating_times)
 
