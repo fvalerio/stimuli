@@ -27,7 +27,7 @@ warping = False
 # natural_movie_directory = 'C:' + os.sep + 'Quique' + os.sep + 'Natural Movies'
 # imaging_session_directory = 'C:' + os.sep + 'Quique' + os.sep + 'Imaging Sessions' + os.sep + str(date)
 
-# set the orientations (in degrees) of the gratings
+# set the orientations (in degrees) of  the gratings
 orientations = numpy.linspace(270.0, 585.0, 8)
 
 # set how many grating cycles you want per degree

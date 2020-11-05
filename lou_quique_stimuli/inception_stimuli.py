@@ -1,7 +1,14 @@
+'''
+Adapted from Quique's visual_stimuli.py
+
+@author: Vincent
+'''
+
 from psychopy import visual, core, event
 from psychopy.visual import windowwarp
 from gratings import drifting_gratings
 from movies import natural_movies
+from scenes import natural_scenes
 from random import shuffle
 import datetime
 import numpy
@@ -24,67 +31,51 @@ grating_type = 'sqr'
 
 warping = False
 
-natural_movie_directory = 'C:' + os.sep + 'Vincent' + os.sep + 'Natural Movies'
+image_directory = 'C:' + os.sep + 'Vincent' + os.sep + 'Natural Images'
 imaging_session_directory = 'C:' + os.sep + 'Vincent' + os.sep + 'Imaging Sessions' + os.sep + str(date)
+imaging_session_directory += os.sep + mouse
 
-# set the orientations (in degrees) of the gratings
-orientations = numpy.linspace(270.0, 585.0, 8)
-
-# set how many grating cycles you want per degree
-spatial_frequencies = [0.05]
-
-# set how many cycles you want per second for the gratings
-temporal_frequencies = [1.0, 2.0, 4.0, 8.0, 16.0]
-
-grating_repetitions = 10
-
-movie_repetitions = 5
-
-number_of_movies = 5
+number_of_movies = 5000
+movie_repetitions = 1
 
 idle_color = -1
 
-if not os.path.isdir(imaging_session_directory):
- 	os.mkdir(imaging_session_directory)
+# 
+movies = []
+for file in os.listdir(image_directory):
+    if file.lower().endswith(".jpg"):
+        movies.append(file)
 
-imaging_session_directory += os.sep + mouse
-
+# create the directory to save the data file to
 if not os.path.isdir(imaging_session_directory):
- 	os.mkdir(imaging_session_directory)
+ 	os.makedirs(imaging_session_directory)
 
 file_name = imaging_session_directory + os.sep + mouse + '_' + imaging_session + '_' + data_set + ' image_times.txt'
 
-# set a pseudo-random sequence to show the gratings, images, and movies
-grating_order = [[o, s, t] for o in orientations for s in spatial_frequencies for t in temporal_frequencies]*grating_repetitions
-shuffle(grating_order)
-print('grating order: ' + str(grating_order))
-
+# set a pseudo-random sequence to show the images
 movie_order = list(range(number_of_movies))*movie_repetitions
 shuffle(movie_order)
 print('movie order: ' + str(movie_order))
 
-movies = []
-
-for i in range(1, number_of_movies + 1):
-    movies.append(natural_movie_directory + os.sep + str(i) + '.png')
-
 # # make a window for the stimuli
 main_window = visual.Window(monitor = 'NLW1', fullscr = True, color = [idle_color, idle_color, idle_color], useFBO = True, screen = 1)
 
-if warping:
+# if warping:
+# 	# add a spherical warping
+# 	main_warper = windowwarp.Warper(main_window, warp = 'spherical', warpGridsize = 300, eyepoint = [0.5, 0.5], flipHorizontal = False, flipVertical = False)
 
-	# add a spherical warping
-	main_warper = windowwarp.Warper(main_window, warp = 'spherical', warpGridsize = 300, eyepoint = [0.5, 0.5], flipHorizontal = False, flipVertical = False)
+stimulus = image_directory + os.sep + movies[1]
 
-print('Ready...')
 
-# initialize screen to black before imaging
-while True:
-    if event.getKeys(keyList = ['escape']):
-        main_window.close()
-        core.quit()
-    if event.getKeys(keyList = ['space']):
-        break
+# print('Ready...')
+
+# # initialize screen to black before imaging
+# while True:
+#     if event.getKeys(keyList = ['escape']):
+#         main_window.close()
+#         core.quit() 
+#     if event.getKeys(keyList = ['space']):
+#         break
 
 print('Initializing...')
 
@@ -92,63 +83,56 @@ main_window.color = [0, 0, 0]
 
 clock = core.Clock()
 
-# wait for 10 seconds to let scanbox start scanning
-start = clock.getTime()
-end = clock.getTime()
+# # wait for 10 seconds to let scanbox start scanning
+# start = clock.getTime()
+# end = clock.getTime()
 
-while end - start <= 10.0:
-    end = clock.getTime()
+# while end - start <= 10.0:
+#     end = clock.getTime()
 
-    if event.getKeys(keyList = ['escape']):
-        main_window.close()
-        core.quit()
-    if event.getKeys(keyList = ['space']):
-        break
-
-    main_window.flip()
-
-# grating_times = []
-
-# print('Presenting gratings...')
-
-# for orientation, spatial_frequency, temporal_frequency in grating_order:
-#     temp = str(datetime.datetime.now().time())
-#     temp = temp.split(':')
-
-#     time = 0.0
-
-#     for i in range(len(temp)):
-#         time += float(temp[i])*(60.0**i)
-
-#     grating_times.append([orientation, spatial_frequency, temporal_frequency, time])
-
-#     command = drifting_gratings(grating_type, orientation, spatial_frequency, temporal_frequency, presentation_time = 2.0, blank_time = 3.0, windows = [main_window])
-
-#     temp = str(datetime.datetime.now().time())
-#     temp = temp.split(':')
-
-#     time = 0.0
-
-#     for i in range(len(temp)):
-#         time += float(temp[i])*(60.0**i)
-
-#     grating_times.append([orientation, spatial_frequency, temporal_frequency, time])
-
-#     if command == 'quit':
-#         # numpy.savetxt(file_name, grating_times)
+#     if event.getKeys(keyList = ['escape']):
 #         main_window.close()
-#         core.quit()
+#         core.quit() 
+#     if event.getKeys(keyList = ['space']):
+#         break
 
-# numpy.savetxt(file_name, grating_times)
+#     main_window.flip()
 
-print('Presenting movies...')
+print('Presenting images...')
+
+grating_times = []
 
 for m in movie_order:
-    # command = natural_movies(movies[m], blank_time = 3.0, windows = [main_window])
+    temp = str(datetime.datetime.now().time())
+    temp = temp.split(':')
+
+    time = 0.0
+
+    for i in range(len(temp)):
+        time += float(temp[i])*(60.0**i)
+
+    # grating_times.append([movies[m], time])
+    grating_times.append([str(movies[m]), time])
+
+
+    command = natural_scenes(image_directory + os.sep + movies[m], presentation_time = 2.0, blank_time = 3.0, window = main_window)
+
+    temp = str(datetime.datetime.now().time())
+    temp = temp.split(':')
+
+    time = 0.0
+
+    for i in range(len(temp)):
+        time += float(temp[i])*(60.0**i)
+
+    grating_times.append([str(movies[m]), time])
 
     if command == 'quit':
+        numpy.savetxt(file_name, grating_times, fmt='%s')
         main_window.close()
         core.quit()
+
+numpy.savetxt(file_name, grating_times, fmt='%s')
 
 print('Done.')
 
