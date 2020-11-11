@@ -36,7 +36,6 @@ click start (green arrow) in python
 visual_stimuli files saved in C:\Quique\Imaging Sessions
 	drop the file in data folders before transferring
 
-
 sbconfig.eyetracker     = true;  for eye tracker
 	enable eye tracker in scanbox
 	draw square box on mouse
