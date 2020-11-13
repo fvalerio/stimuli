@@ -13,37 +13,38 @@ from random import shuffle
 import datetime
 import numpy
 import os
+import random
 
-from psychopy import visual, monitors
-my_monitor = monitors.Monitor(name='NLW1')
-my_monitor.setSizePix((1920, 1200))
-my_monitor.setWidth(24)
-my_monitor.setDistance(100)
-my_monitor.saveMon()
+#from psychopy import visual, monitors
+#my_monitor = monitors.Monitor(name='NLW1')
+#my_monitor.setSizePix((1920, 1200))
+#my_monitor.setWidth(24)
+#my_monitor.setDistance(100)
+#my_monitor.saveMon()
 
 mouse = 'vincent'
-date = 20201029
+date = 20201106
 
 imaging_session = '000'
-data_set = '000'
+data_set = '003'
 
 grating_type = 'sqr'
 
 warping = False
 
-image_directory = 'C:' + os.sep + 'Vincent' + os.sep + 'Natural Images'
+image_directory = 'C:' + os.sep + 'Vincent' + os.sep + 'test_grayscale'
 imaging_session_directory = 'C:' + os.sep + 'Vincent' + os.sep + 'Imaging Sessions' + os.sep + str(date)
 imaging_session_directory += os.sep + mouse
 
-number_of_movies = 5000
-movie_repetitions = 1
+number_of_movies = 50
+movie_repetitions = 10
 
 idle_color = -1
 
 # 
 movies = []
 for file in os.listdir(image_directory):
-    if file.lower().endswith(".jpg"):
+    if file.lower().endswith(".jpeg"):
         movies.append(file)
 
 # create the directory to save the data file to
@@ -67,15 +68,15 @@ main_window = visual.Window(monitor = 'NLW1', fullscr = True, color = [idle_colo
 stimulus = image_directory + os.sep + movies[1]
 
 
-# print('Ready...')
+print('Ready...')
 
-# # initialize screen to black before imaging
-# while True:
-#     if event.getKeys(keyList = ['escape']):
-#         main_window.close()
-#         core.quit() 
-#     if event.getKeys(keyList = ['space']):
-#         break
+# initialize screen to black before imaging
+while True:
+    if event.getKeys(keyList = ['escape']):
+        main_window.close()
+        core.quit() 
+    if event.getKeys(keyList = ['space']):
+        break
 
 print('Initializing...')
 
@@ -83,20 +84,20 @@ main_window.color = [0, 0, 0]
 
 clock = core.Clock()
 
-# # wait for 10 seconds to let scanbox start scanning
-# start = clock.getTime()
-# end = clock.getTime()
+# wait for 10 seconds to let scanbox start scanning
+start = clock.getTime()
+end = clock.getTime()
 
-# while end - start <= 10.0:
-#     end = clock.getTime()
+while end - start <= 10.0:
+    end = clock.getTime()
 
-#     if event.getKeys(keyList = ['escape']):
-#         main_window.close()
-#         core.quit() 
-#     if event.getKeys(keyList = ['space']):
-#         break
+    if event.getKeys(keyList = ['escape']):
+        main_window.close()
+        core.quit() 
+    if event.getKeys(keyList = ['space']):
+        break
 
-#     main_window.flip()
+main_window.flip()
 
 print('Presenting images...')
 
@@ -114,8 +115,9 @@ for m in movie_order:
     # grating_times.append([movies[m], time])
     grating_times.append([str(movies[m]), time])
 
-
-    command = natural_scenes(image_directory + os.sep + movies[m], presentation_time = 2.0, blank_time = 3.0, window = main_window)
+    blank = float(random.randrange(300,500)) / 1000
+    print(blank)
+    command = natural_scenes(image_directory + os.sep + movies[m], presentation_time = 0.5, blank_time = blank, window = main_window)
 
     temp = str(datetime.datetime.now().time())
     temp = temp.split(':')
