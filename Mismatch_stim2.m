@@ -280,7 +280,7 @@ angles1(idx, 2) = -1;
 
 while l <= loops
     if l == 1 && trig == 1
-        ServerSend = tcpip('10.93.15.144',50000,'NetworkRole','server', ...
+        ServerSend = tcpip('10.93.14.247',50000,'NetworkRole','server', ...
             'OutputBufferSize', 2);
         fopen(ServerSend);
         fwrite(ServerSend, uint16(0), 'uint16');
@@ -295,7 +295,8 @@ while l <= loops
     end
     tb  = tic;
     cb = 0;
-    while toc(tb) < duration
+    while toc(tb) < duration      % change the amount of time of the black screen
+        
         cb = cb + 1;
         if cb == 1
             Screen('FillRect', window, [0 0 0]);
