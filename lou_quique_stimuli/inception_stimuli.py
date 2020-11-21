@@ -32,7 +32,7 @@ grating_type = 'sqr'
 
 warping = False
 
-image_directory = 'C:' + os.sep + 'Vincent' + os.sep + 'test_grayscale'
+image_directory = 'C:' + os.sep + 'vincent' + os.sep + 'grayscale_stimuli '
 imaging_session_directory = 'C:' + os.sep + 'Vincent' + os.sep + 'Imaging Sessions' + os.sep + str(date)
 imaging_session_directory += os.sep + mouse
 
@@ -118,7 +118,8 @@ for m in movie_order:
     blank = float(random.randrange(300,500)) / 1000
     print(blank)
     command = natural_scenes(image_directory + os.sep + movies[m], presentation_time = 0.5, blank_time = blank, window = main_window)
-
+    print(main_window.size)    
+    
     temp = str(datetime.datetime.now().time())
     temp = temp.split(':')
 
