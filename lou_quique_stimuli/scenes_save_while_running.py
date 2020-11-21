@@ -1,6 +1,12 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Fri Nov 20 19:38:34 2020
+
+@author: Vincent
+"""
 from psychopy import visual, core, event
 
-def natural_scenes(image, presentation_time, blank_time, window):
+def natural_scenes_save(image, presentation_time, blank_time, window):
 
     image_stimulus = visual.ImageStim(window, opacity = 0.0, size = (1.5*window.size[0]/1.5, 1.5*window.size[1]/1.125), name = 'image_stimulus', autoLog = False, units = 'pix')
 #    image_stimulus = visual.ImageStim(window, opacity = 0.0, name = 'image_stimulus', autoLog = False, units = 'pix')
@@ -22,6 +28,9 @@ def natural_scenes(image, presentation_time, blank_time, window):
 				
                 first = False
                 
+                # add lines to save presented frames
+                image_stimulus.getMovieFrame('front')
+                image_stimulus.saveMovieFrames(image)
         else:
             if second:
                 image_stimulus.opacity = 0.0
