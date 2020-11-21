@@ -9,6 +9,7 @@ from psychopy.visual import windowwarp
 from gratings import drifting_gratings
 from movies import natural_movies
 from scenes import natural_scenes
+from scenes_save_while_running import natural_scenes_save
 from random import shuffle
 import datetime
 import numpy
@@ -23,7 +24,7 @@ import random
 #my_monitor.saveMon()
 
 mouse = 'vincent'
-date = 20201106
+date = 20201120
 
 imaging_session = '000'
 data_set = '003'
@@ -32,12 +33,12 @@ grating_type = 'sqr'
 
 warping = False
 
-image_directory = 'C:' + os.sep + 'vincent' + os.sep + 'grayscale_stimuli '
-imaging_session_directory = 'C:' + os.sep + 'Vincent' + os.sep + 'Imaging Sessions' + os.sep + str(date)
+image_directory = 'C:' + os.sep + 'vincent' + os.sep + 'grayscale_stimuli'
+imaging_session_directory = 'C:' + os.sep + 'vincent' + os.sep + 'Imaging Sessions' + os.sep + str(date)
 imaging_session_directory += os.sep + mouse
 
-number_of_movies = 50
-movie_repetitions = 10
+number_of_movies = 5500
+movie_repetitions = 1
 
 idle_color = -1
 
@@ -103,6 +104,7 @@ print('Presenting images...')
 
 grating_times = []
 
+counter = 0
 for m in movie_order:
     temp = str(datetime.datetime.now().time())
     temp = temp.split(':')
@@ -116,10 +118,10 @@ for m in movie_order:
     grating_times.append([str(movies[m]), time])
 
     blank = float(random.randrange(300,500)) / 1000
-    print(blank)
-    command = natural_scenes(image_directory + os.sep + movies[m], presentation_time = 0.5, blank_time = blank, window = main_window)
-    print(main_window.size)    
-    
+    print(counter)
+    counter +=1
+    command = natural_scenes_save(image_directory + os.sep + movies[m], presentation_time = 0.01, blank_time = 0.01, window = main_window)
+
     temp = str(datetime.datetime.now().time())
     temp = temp.split(':')
 

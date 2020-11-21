@@ -5,6 +5,7 @@ Created on Fri Nov 20 19:38:34 2020
 @author: Vincent
 """
 from psychopy import visual, core, event
+import os
 
 def natural_scenes_save(image, presentation_time, blank_time, window):
 
@@ -29,8 +30,8 @@ def natural_scenes_save(image, presentation_time, blank_time, window):
                 first = False
                 
                 # add lines to save presented frames
-                image_stimulus.getMovieFrame('front')
-                image_stimulus.saveMovieFrames(image)
+                window.getMovieFrame('front')
+                window.saveMovieFrames(os.path.splitext(image)[0] + '_rescaled.png')
         else:
             if second:
                 image_stimulus.opacity = 0.0
