@@ -15,6 +15,7 @@ import datetime
 import numpy
 import os
 import random
+import matlab.engine
 
 #from psychopy import visual, monitors
 #my_monitor = monitors.Monitor(name='NLW1')
@@ -69,15 +70,21 @@ main_window = visual.Window(monitor = 'NLW1', fullscr = True, color = [idle_colo
 stimulus = image_directory + os.sep + movies[1]
 
 
-print('Ready...')
+# print('Ready...')
 
-# initialize screen to black before imaging
-while True:
-    if event.getKeys(keyList = ['escape']):
-        main_window.close()
-        core.quit() 
-    if event.getKeys(keyList = ['space']):
-        break
+# # initialize screen to black before imaging
+# while True:
+#     if event.getKeys(keyList = ['escape']):
+#         main_window.close()
+#         core.quit() 
+#     if event.getKeys(keyList = ['space']):
+#         break
+
+print('Waiting for matlab to respond')
+
+eng = matlab.engine.start_matlab()
+eng.tcpip_test(nargout=0)
+eng.quit()
 
 print('Initializing...')
 
@@ -133,11 +140,11 @@ for m in movie_order:
     grating_times.append([str(movies[m]), time])
 
     if command == 'quit':
-        numpy.savetxt(file_name, grating_times, fmt='%s')
+        # numpy.savetxt(file_name, grating_times, fmt='%s')
         main_window.close()
         core.quit()
 
-numpy.savetxt(file_name, grating_times, fmt='%s')
+# numpy.savetxt(file_name, grating_times, fmt='%s')
 
 print('Done.')
 

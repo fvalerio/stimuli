@@ -7,7 +7,7 @@ function status = scanboxUDP(message)
     fopen(udp_sender);
 
     fprintf(udp_sender, message);
-    
+  
     status = 'success';
     
 end
